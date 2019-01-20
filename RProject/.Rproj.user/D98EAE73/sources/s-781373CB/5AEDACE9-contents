@@ -2,7 +2,11 @@
 title: 'Peer-graded Assignment: R Markdown and Leaflet'
 author: "Mohammed Abuarar"
 date: "January 20, 2019"
-output: html_document
+output:
+  html_document:
+    keep_md: yes
+  md_document:
+    variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
@@ -41,7 +45,7 @@ Before proceeding to process with Leaflet, lets prepare icons and popups to be u
 ```{r IconsAndPopups}
 BulgariaIcon <- makeIcon(iconUrl="http://www.freeflagicons.com/download/?series=magnified_flag_with_map&country=bulgaria&size=64",
 iconWidth = 64, iconHeight = 48,iconAnchorX = 32, iconAnchorY = 24)
-#Icon Image with Bulgaria flag colors
+#Icon Image
 BulgarianPopup<-rep(NA,nrow(BulgariaCities))
 for(i in 1:nrow(BulgariaCities)) {
 BulgarianPopup[i]<-paste("CITY","=",BulgariaCities[i,1],"<br/>","POPULATION","=",BulgariaCities[i,5])}

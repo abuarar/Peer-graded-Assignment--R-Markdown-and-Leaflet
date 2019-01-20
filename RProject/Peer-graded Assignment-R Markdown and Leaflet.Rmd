@@ -2,7 +2,11 @@
 title: 'Peer-graded Assignment: R Markdown and Leaflet'
 author: "Mohammed Abuarar"
 date: "January 20, 2019"
-output: html_document
+output:
+  html_document:
+    keep_md: yes
+  md_document:
+    variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
