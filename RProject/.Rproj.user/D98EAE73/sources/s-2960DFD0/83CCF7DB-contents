@@ -41,7 +41,7 @@ Before proceeding to process with Leaflet, lets prepare icons and popups to be u
 ```{r IconsAndPopups}
 BulgariaIcon <- makeIcon(iconUrl="http://www.freeflagicons.com/download/?series=magnified_flag_with_map&country=bulgaria&size=64",
 iconWidth = 64, iconHeight = 48,iconAnchorX = 32, iconAnchorY = 24)
-#Icon Image
+#Icon Image with Bulgaria flag colors
 BulgarianPopup<-rep(NA,nrow(BulgariaCities))
 for(i in 1:nrow(BulgariaCities)) {
 BulgarianPopup[i]<-paste("CITY","=",BulgariaCities[i,1],"<br/>","POPULATION","=",BulgariaCities[i,5])}

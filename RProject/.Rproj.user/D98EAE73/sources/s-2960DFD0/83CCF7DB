@@ -5,16 +5,17 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1217139504",
+    "hash" : "0",
     "id" : "83CCF7DB",
-    "lastKnownWriteTime" : 1548006353,
-    "last_content_update" : 1548006353400,
+    "lastKnownWriteTime" : 1548007044,
+    "last_content_update" : 1548007044213,
     "path" : "C:/Users/AbuArar/Desktop/Coursera Data Science/9-Developing Data Products/Week 2 R Markdown and Leaflet/leaflet/Peer-graded Assignment-R Markdown and Leaflet.Rmd",
     "project_path" : null,
     "properties" : {
-        "cursorPosition" : "1,54",
-        "scrollLine" : "0",
-        "tempName" : "Untitled1"
+        "cursorPosition" : "36,0",
+        "scrollLine" : "35",
+        "tempName" : "Untitled1",
+        "working_dir" : "project"
     },
     "relative_order" : 1,
     "source_on_save" : false,
