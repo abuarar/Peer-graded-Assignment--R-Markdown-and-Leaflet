@@ -1,0 +1,90 @@
+---
+title: 'Peer-graded Assignment: R Markdown and Leaflet'
+author: "Mohammed Abuarar"
+date: "January 20, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Leaflet Package loading:
+
+We load the Leaflet package:
+
+```{r LeafletPackage,warning=FALSE}
+library(leaflet)
+```
+
+## Getting spatial data:
+
+I searched the web for a good simple spatial data that can be demonstrated using Leaflet mapping tool, and I found this nice website https://simplemaps.com/.
+<br/>
+I have chosen Bulgaria and downloaded it's spatial data into a ".csv" which can be easily read into r
+<br/>
+Then after this has had a little bit cleaning the dataset from records with missing data, and reducing variables only to the ones of interest.
+
+```{r BulgariaSpatialDataDownload}
+download.file("https://simplemaps.com/static/data/country-cities/bg/bg.csv","./bg.csv")
+BulgariaCities<-read.csv("./bg.csv")
+BulgariaCities<-BulgariaCities[complete.cases(BulgariaCities),]
+BulgariaCities<-BulgariaCities[,c(1,2,3,7,8)]
+print(BulgariaCities)
+```
+
+## Preparing Icons and Popups:
+
+Before proceeding to process with Leaflet, lets prepare icons and popups to be used.
+
+
+```{r IconsAndPopups}
+BulgariaIcon <- makeIcon(iconUrl="http://www.freeflagicons.com/download/?series=magnified_flag_with_map&country=bulgaria&size=64",
+iconWidth = 64, iconHeight = 48,iconAnchorX = 32, iconAnchorY = 24)
+#Icon Image
+BulgarianPopup<-rep(NA,nrow(BulgariaCities))
+for(i in 1:nrow(BulgariaCities)) {
+BulgarianPopup[i]<-paste("CITY","=",BulgariaCities[i,1],"<br/>","POPULATION","=",BulgariaCities[i,5])}
+#Preparing multiple popups to show each city name , and its population
+```
+
+## Adding Multiple markers with Popups to our created map widget:
+
+We use the piping notation "%>%" to chain the stage output as input to next stage:<br/>
+
+* leaflet() will transform our data frame "BulgariaCities" into leaflet map widget.
+* addTiles() will add graphics elements and layers to the map widget.
+* addMarkers() will take (lat & lng) values in previous output and add graphics elements layer (Icons + Popups) to map widget according to each spatial coordinates (lat & lng).
+
+```{r CreatingMapWidget}
+BulgariaCities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = BulgariaIcon, popup = BulgarianPopup)
+```
+
+## Drawing circles with its radius to ahow city population:
+
+* We continue the chaining by adding circles using "addCircles()" function to indicate the population of each city by "radius =" argument.
+* "color=" argument will color Capital city with red and other normal cities with blue.
+
+```{r PopulationCircles}
+BulgariaCities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = BulgariaIcon, popup = BulgarianPopup) %>%
+  addCircles(weight = 1, radius = sqrt(BulgariaCities$population)*60,color=ifelse(BulgariaCities$capital=="primary","red","blue"))
+```
+
+## Adding Legends:
+
+* Last part is to add legend to show our coloring notation: (Capital->"red" , City->"blue")
+
+```{r Legend}
+BulgariaCities %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = BulgariaIcon, popup = BulgarianPopup) %>%
+  addCircles(weight = 1, radius = sqrt(BulgariaCities$population)*60,color=ifelse(BulgariaCities$capital=="primary","red","blue")) %>%
+  addLegend(labels = c("Capital","City"), colors = c("red","blue"))
+```
